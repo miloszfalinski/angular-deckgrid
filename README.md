@@ -38,13 +38,13 @@ Okay, we assume that you have a collection of photos and you want to display the
 * `cardTemplateString` attribute: You can provide this attribute *instead* of the `cardTemplate` attribute to use the attribute value directly as the template. Example:
 
     ```html
-    <div deckgrid source="photos" cardTemplateString="<p>{{card.title}}</p>"></div>
+    <div deckgrid class="deckgrid" source="photos" cardTemplateString="<p>{{card.title}}</p>"></div>
     ```
 
 * No template attribute: if you omit a template attribute (`cardTemplate` and `cardTemplateString`), the inner HTML of the directive will be used as the template, like in:
 
     ```html
-    <div deckgrid source="photos">
+    <div deckgrid class="deckgrid" source="photos">
         <div class="a-card">
             <h1>{{card.title}}</h1>
 
@@ -62,9 +62,9 @@ Okay, you have your controller ready and your template is fine so far. The only 
 **Your possible data structure**
 
     $scope.photos = [
-        id: 'p1', 'title': 'A nice day!', src: "http://lorempixel.com/300/400/",
-        id: 'p2', 'title': 'Puh!', src: "http://lorempixel.com/300/400/sports",
-        id: 'p3', 'title': 'What a club!', src: "http://lorempixel.com/300/400/nightlife"
+        {id: 'p1', 'title': 'A nice day!', src: "http://lorempixel.com/300/400/"},
+        {id: 'p2', 'title': 'Puh!', src: "http://lorempixel.com/300/400/sports"},
+        {id: 'p3', 'title': 'What a club!', src: "http://lorempixel.com/300/400/nightlife"}
     ];
 
 **Your possible card template**
@@ -123,7 +123,7 @@ The grid items will be distributed by your configured CSS selectors. An example:
     .deckgrid[deckgrid]::before {
         /* Specifies that the grid should have a maximum of 4 columns. Each column will have the classes 'column' and 'column-1-4' */
         content: '4 .column.column-1-4';
-	    font-size: 0; /* See https://github.com/akoenig/angular-deckgrid/issues/14#issuecomment-35728861 */
+        font-size: 0; /* See https://github.com/akoenig/angular-deckgrid/issues/14#issuecomment-35728861 */
         visibility: hidden;
     }
 
@@ -170,6 +170,28 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 
 ## Changelog
 
+### Version 0.4.5 (Future)
+
+- Open: [Bugfix] We need a solution to prevent the model binding for `innerHTML` templates (e.g. `ngIf` not working) [#44](https://github.com/akoenig/angular-deckgrid/issues/44)
+
+### Version 0.4.4 (20140514)
+
+- Merged #47
+- Merged #51
+
+### Version 0.4.3 (20140422)
+
+- [Bugfix] OnMediaQueryChange Listeners not being removed onDestroy. [#35](https://github.com/akoenig/angular-deckgrid/issues/35) 
+
+### Version 0.4.2 (20140422)
+
+- [Bugfix] Problems with device orientation [#46](https://github.com/akoenig/angular-deckgrid/issues/46)
+
+### Version 0.4.1 (20140317)
+
+- [Bugfix] If model is not ready by rendering, there's an error [#31](https://github.com/akoenig/angular-deckgrid/issues/31)
+- [Feature] Multiple grids on page with cardTemplateString use the last template available [#33](https://github.com/akoenig/angular-deckgrid/issues/33)
+
 ### Version 0.4.0 (20140224)
 
 - [Feature] Functionality for passing inline templates.
@@ -210,4 +232,4 @@ Do you use the `angular-deckgrid` and would like to be featured here? Just send 
 
 ## Author
 
-Copyright 2013, [André König](http://iam.andrekoenig.info) (andre.koenig@posteo.de)
+Copyright 2013 - 2014, [André König](http://iam.andrekoenig.info) (andre.koenig@posteo.de)

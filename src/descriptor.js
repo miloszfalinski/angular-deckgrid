@@ -41,8 +41,15 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             // Will be created in the linking function.
             //
             this.$$deckgrid = null;
+
             this.transclude = true;
             this.link = this.$$link.bind(this);
+
+            //
+            // Will be incremented if using inline templates.
+            //
+            this.$$templateKeyIndex = 0;
+
         }
 
         /**
@@ -63,6 +70,8 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
          *
          */
         Descriptor.prototype.$$link = function $$link (scope, elem, attrs, nullController, transclude) {
+            var templateKey = 'deckgrid/innerHtmlTemplate' + (++this.$$templateKeyIndex) + '.html';
+
             scope.$on('$destroy', this.$$destroy.bind(this));
 
             if (attrs.cardtemplate === undefined) {
@@ -82,17 +91,17 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
                             }
                         }
 
-                        $templateCache.put('innerHtmlTemplate', extractedInnerHTML.join());
+                        $templateCache.put(templateKey, extractedInnerHTML.join());
                     });
                 } else {
                     // use the provided template string
                     //
                     // note: the attr is accessed via the elem object, as the attrs content
                     // is already compiled and thus lacks the {{...}} expressions
-                    $templateCache.put('innerHtmlTemplate', elem.attr('cardtemplatestring'));
+                    $templateCache.put(templateKey, elem.attr('cardtemplatestring'));
                 }
 
-                scope.cardTemplate = 'innerHtmlTemplate';
+                scope.cardTemplate = templateKey;
             } else {
                 // use the provided template file
                 scope.cardTemplate = attrs.cardtemplate;
