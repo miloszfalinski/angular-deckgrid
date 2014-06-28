@@ -200,8 +200,10 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
                 'model' :
                 function() {
                     var result = '';
-                    for (var i = 0; i < scope.model.length; i++) {
-                        result += scope.itemIdentifierFn(scope.model[i]);
+                    if (scope.model) {
+                        for (var i = 0; i < scope.model.length; i++) {
+                            result += scope.itemIdentifierFn(scope.model[i]);
+                        }
                     }
                     return result;
                 };
@@ -222,7 +224,7 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
 
                 self.$$watchers.push(onDestroy);
             });
-            
+
             mql = $window.matchMedia('(orientation: portrait)');
             mql.addListener(self.$$onMediaQueryChange.bind(self));
 
